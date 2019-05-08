@@ -3,8 +3,7 @@
     'name': "reporte_jarochito",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Modificacion de reporte de factura""",
 
     'description': """
         Long description of module's purpose
