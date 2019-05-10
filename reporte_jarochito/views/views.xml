@@ -1,60 +1,39 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
-    <!--
-    <record model="ir.ui.view" id="reporte_jarochito.list">
-      <field name="name">reporte_jarochito list</field>
-      <field name="model">reporte_jarochito.reporte_jarochito</field>
+
+    <record id="add_page_description_product" model="ir.ui.view">
+      <field name="name">add.page.description.product</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+          <xpath expr="//page[@name='inventory']" position="after">
+            <page string="Descripcion del producto">
+              <group>
+                <group>
+                  <field name="clase_prod" string="Clase" />
+                  <field name="presentation_prod" string="Presentación" />
+                  <field name="code_container_prod" string="Cod. Tipo de envase" />
+                </group>
+                <group>
+                  <field name="taste_product" string="Sabor" />
+                  <field name="brand_product" string="Código de marca" />
+                </group>
+              </group>
+            </page>
+          </xpath>
+        </field>
+    </record>
+
+    <record id="add_camp_tarif" model="ir.ui.view">
+      <field name="name">add.camp.tarif</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
       <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </tree>
+        <xpath expr="//field[@name='zone']" position="after">
+          <field name="rate_address" string="Tarifa" />
+        </xpath>
       </field>
     </record>
-    -->
 
-    <!-- actions opening views on models -->
-    <!--
-    <record model="ir.actions.act_window" id="reporte_jarochito.action_window">
-      <field name="name">reporte_jarochito window</field>
-      <field name="res_model">reporte_jarochito.reporte_jarochito</field>
-      <field name="view_mode">tree,form</field>
-    </record>
-    -->
-
-    <!-- server action to the one above -->
-    <!--
-    <record model="ir.actions.server" id="reporte_jarochito.action_server">
-      <field name="name">reporte_jarochito server</field>
-      <field name="model_id" ref="model_reporte_jarochito_reporte_jarochito"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": self._name,
-        }
-      </field>
-    </record>
-    -->
-
-    <!-- Top menu item -->
-    <!--
-    <menuitem name="reporte_jarochito" id="reporte_jarochito.menu_root"/>
-    -->
-    <!-- menu categories -->
-    <!--
-    <menuitem name="Menu 1" id="reporte_jarochito.menu_1" parent="reporte_jarochito.menu_root"/>
-    <menuitem name="Menu 2" id="reporte_jarochito.menu_2" parent="reporte_jarochito.menu_root"/>
-    -->
-    <!-- actions -->
-    <!--
-    <menuitem name="List" id="reporte_jarochito.menu_1_list" parent="reporte_jarochito.menu_1"
-              action="reporte_jarochito.action_window"/>
-    <menuitem name="Server to list" id="reporte_jarochito" parent="reporte_jarochito.menu_2"
-              action="reporte_jarochito.action_server"/>
-    -->
   </data>
 </odoo>
