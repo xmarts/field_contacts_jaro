@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from openerp.exceptions import UserError, RedirectWarning, ValidationError
 
 class AddClaseProduct(models.Model):
 
@@ -66,3 +67,15 @@ class AddRateAddressDelivery(models.Model):
 	_inherit = 'res.partner'
 
 	rate_address = fields.Many2one( 'product.pricelist', string = 'Tarifa' )
+
+	most_ieps = fields.Boolean( string = 'Mostrar IEPS' )
+
+class OnchangeDirectionFacture(models.Model):
+
+	_inherit = 'sale.order'
+
+	@api.onchange('partner_shipping_id')
+	def changeDirFac(self):
+		if self.partner_shipping_id:
+			self.pricelist_id = self.partner_shipping_id.rate_address.id
+			#raise UserError(self.partner_shipping_id.rate_address.name)
