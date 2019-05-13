@@ -1,6 +1,8 @@
 <odoo>
   <data>
 
+    <!-- Añadiendo un nuevo page con campos en la vista del producto -->
+
     <record id="add_page_description_product" model="ir.ui.view">
       <field name="name">add.page.description.product</field>
       <field name="model">product.template</field>
@@ -23,6 +25,8 @@
           </xpath>
         </field>
     </record>
+  
+    <!-- Añadiendo campos en la vista de contacto -->
 
     <record id="add_camp_tarif" model="ir.ui.view">
       <field name="name">add.camp.tarif</field>
@@ -34,8 +38,11 @@
             <field name="rate_address" string="Tarifa" />
           </group>
         </xpath>
+        <xpath expr="//field[@name='property_product_pricelist']" position="after">
+          <field name="most_ieps" string="Mostrar IEPS" />
+        </xpath>
       </field>
-    </record>
+    </record> 
 
   </data>
 </odoo>
