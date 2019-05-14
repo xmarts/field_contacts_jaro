@@ -78,4 +78,3 @@ class OnchangeDirectionFacture(models.Model):
 	def changeDirFac(self):
 		if self.partner_shipping_id:
 			self.pricelist_id = self.partner_shipping_id.rate_address.id
-			#raise UserError(self.partner_shipping_id.rate_address.name)
