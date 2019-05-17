@@ -88,7 +88,7 @@ class ChangeFunctionAmount(models.Model):
 		'currency_id', 'company_id', 'date_invoice', 'type')
 
 	def _compute_amount(self):
-		
+
 		round_curr = self.currency_id.round
 		self.amount_untaxed = sum(line.price_subtotal for line in self.invoice_line_ids)
 
@@ -101,7 +101,6 @@ class ChangeFunctionAmount(models.Model):
 						if f.name == 'IEPS':
 							rest = round_curr(l.amount)
 							self.amount_tax = sum(round_curr(line.amount_total) for line in self.tax_line_ids) - rest
-							self.l10n_mx_edi_origin = l.amount_total
 						else:
 							rest = 2
 							self.amount_tax = sum(round_curr(line.amount_total) for line in self.tax_line_ids)
