@@ -103,7 +103,7 @@ class ChangeFunctionAmount(models.Model):
 							self.amount_tax = sum(round_curr(line.amount_total) for line in self.tax_line_ids) - rest
 						else:
 							rest = 2
-							self.amount_tax = sum(round_curr(line.amount_total) for line in self.tax_line_ids)
+							self.amount_tax = l.amount_total
 
 		self.amount_total = self.amount_untaxed + self.amount_tax
 		amount_total_company_signed = self.amount_total
