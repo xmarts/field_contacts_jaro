@@ -79,7 +79,7 @@ class OnchangeDirectionFacture(models.Model):
 		if self.partner_shipping_id:
 			self.pricelist_id = self.partner_shipping_id.rate_address.id
 
-class ChangeFunctionAmount(models.Model):
+'''class ChangeFunctionAmount(models.Model):
 
 	_inherit = 'account.invoice'				
 
@@ -132,7 +132,7 @@ class IepsInvoiceLine(models.Model):
 						operation = ( value_prod * percentaje ) / 100
 						self.price_unit = value_prod + operation
 					else:
-						self.price_unit = lines.product_id.lst_price
+						self.price_unit = lines.product_id.lst_price'''
 
 
 class IepsOrderLine(models.Model):

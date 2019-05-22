@@ -26,7 +26,7 @@
         'security/ir.model.access.csv',
         'views/views.xml',
         'views/add_menu_items.xml',
-        'views/fac_ieps.xml',
+        #'views/fac_ieps.xml',
         'views/presup.xml',
         'views/templates.xml',
     ],
