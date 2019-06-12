@@ -146,31 +146,30 @@ class IepsOrderLine(models.Model):
 				for tax in line.tax_id:
 					for tag in tax.tag_ids:
 						if tag.name == 'IEPS':
-							value_prod = line.product_id.lst_price
-							percentage = tax.amount
-							operation = ( value_prod * percentage ) / 100
-							line.price_unit = value_prod + operation
+							line.price_unit = line.product_id.lst_price + tax.amount
 
 	@api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_id')
 	def _compute_amount(self):
 		"""
 		Compute the amounts of the SO line.
 		"""	
+
 		for line in self:
 			price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
 			taxes = line.tax_id.compute_all(price, line.order_id.currency_id, line.product_uom_qty, product=line.product_id, partner=line.order_id.partner_shipping_id)
 			amount_env = 0
 			for tax in line.tax_id:
 				for tag in tax.tag_ids:
-					value_prod = line.product_id.lst_price
-					percentage = tax.amount
-					operation = ( value_prod * percentage ) / 100
-					amount_env = operation
 					if tag.name == 'IEPS':
-						result = amount_env - operation
-						amount_env = result
-			line.update({
+						amount_env = tax.amount
+			'''line.update({
 				'price_tax': amount_env,
+				'price_total': taxes['total_included'],
+				'price_subtotal': taxes['total_excluded'],
+			})'''
+
+			line.update({
+				'price_tax': sum(t.get('amount', 0.0) for t in taxes.get('taxes', [])) - amount_env,
 				'price_total': taxes['total_included'],
 				'price_subtotal': taxes['total_excluded'],
 			})
@@ -183,7 +182,7 @@ class IepsOrderLine(models.Model):
 				'price_subtotal': taxes['total_excluded'],
 			})'''
 
-class IepsSales(models.Model):
+'''class IepsSales(models.Model):
 
 	_inherit = 'sale.order'
 
@@ -203,3 +202,4 @@ class IepsSales(models.Model):
 				'amount_tax': order.pricelist_id.currency_id.round(amount_tax),
 				'amount_total': amount_untaxed + amount_tax,
 			})
+'''
