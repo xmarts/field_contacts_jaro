@@ -74,6 +74,14 @@ class AddRateAddressDelivery(models.Model):
 
 	type_suc = fields.Selection( [('A','Cedis'),('S','Sucursal'),('O','Oficinas')] , string = 'Tipo')
 
+	format_suc = fields.Char( compute = "getValue", readonly=True )
+
+	def getValue(self):
+		if self.number_sucursal and self.type_suc:
+			self.format_suc = str(self.type_suc) + str(self.number_sucursal)
+		else:
+			self.format_suc = ''
+
 class OnchangeDirectionFacture(models.Model):
 
 	_inherit = 'sale.order'
@@ -166,44 +174,9 @@ class IepsOrderLine(models.Model):
 				for tag in tax.tag_ids:
 					if tag.name == 'IEPS':
 						amount_env = tax.amount
-			'''line.update({
-				'price_tax': amount_env,
-				'price_total': taxes['total_included'],
-				'price_subtotal': taxes['total_excluded'],
-			})'''
 
 			line.update({
 				'price_tax': sum(t.get('amount', 0.0) for t in taxes.get('taxes', [])) - amount_env,
 				'price_total': taxes['total_included'],
 				'price_subtotal': taxes['total_excluded'],
 			})
-
-			'''price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-			taxes = line.tax_id.compute_all(price, line.order_id.currency_id, line.product_uom_qty, product=line.product_id, partner=line.order_id.partner_shipping_id)
-			line.update({
-				'price_tax': sum(t.get('amount', 0.0) for t in taxes.get('taxes', [])),
-				'price_total': taxes['total_included'],
-				'price_subtotal': taxes['total_excluded'],
-			})'''
-
-'''class IepsSales(models.Model):
-
-	_inherit = 'sale.order'
-
-	@api.depends('order_line.price_total')
-	def _amount_all(self):
-		"""
-		Compute the total amounts of the SO.
-		"""
-		for order in self:
-			amount_untaxed = amount_tax = 0.0
-			for line in order.order_line:
-				amount_untaxed += line.price_subtotal
-				amount_tax += line.price_tax
-
-			order.update({
-				'amount_untaxed': order.pricelist_id.currency_id.round(amount_untaxed),
-				'amount_tax': order.pricelist_id.currency_id.round(amount_tax),
-				'amount_total': amount_untaxed + amount_tax,
-			})
-'''

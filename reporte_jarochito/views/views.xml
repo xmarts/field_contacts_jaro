@@ -42,6 +42,7 @@
           <field name="most_ieps" string="Mostrar IEPS" />
           <field name="number_sucursal" string="Numero de sucursal" />
           <field name="type_suc" string="Tipo" />
+          <field name="format_suc" string="Formato entrega" />
         </xpath>
       </field>
     </record> 
