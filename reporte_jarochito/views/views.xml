@@ -40,6 +40,8 @@
         </xpath>
         <xpath expr="//field[@name='property_product_pricelist']" position="after">
           <field name="most_ieps" string="Mostrar IEPS" />
+          <field name="number_sucursal" string="Numero de sucursal" />
+          <field name="type_suc" string="Tipo" />
         </xpath>
       </field>
     </record> 

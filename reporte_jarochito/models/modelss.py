@@ -70,10 +70,6 @@ class AddRateAddressDelivery(models.Model):
 
 	most_ieps = fields.Boolean( string = 'Mostrar IEPS' )
 
-	number_sucursal = fields.Char( string="Numero" )
-
-	type_suc = fields.Selection( [('A','Cedis'),('S','Sucursal'),('O','Oficinas')] , string = 'Tipo')
-
 class OnchangeDirectionFacture(models.Model):
 
 	_inherit = 'sale.order'
@@ -162,7 +158,7 @@ class IepsOrderLine(models.Model):
 			price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
 			taxes = line.tax_id.compute_all(price, line.order_id.currency_id, line.product_uom_qty, product=line.product_id, partner=line.order_id.partner_shipping_id)
 			amount_env = 0
-			for tax in line.tax_id:
+		  for tax in line.tax_id:
 				for tag in tax.tag_ids:
 					if tag.name == 'IEPS':
 						amount_env = tax.amount
@@ -173,7 +169,7 @@ class IepsOrderLine(models.Model):
 			})'''
 
 			line.update({
-				'price_tax': sum(t.get('amount', 0.0) for t in taxes.get('taxes', [])) - amount_env,
+				'price_tax': sum(t.get('amount', 0.0) for t in taxes.get('taxes', [])),
 				'price_total': taxes['total_included'],
 				'price_subtotal': taxes['total_excluded'],
 			})
@@ -207,3 +203,5 @@ class IepsOrderLine(models.Model):
 				'amount_total': amount_untaxed + amount_tax,
 			})
 '''
+
+class ClassName(object):
