@@ -76,6 +76,8 @@ class AddRateAddressDelivery(models.Model):
 
 	format_suc = fields.Char( compute = "getValue", readonly=True )
 
+	gln = fields.Char( string = 'GLN' )
+
 	def getValue(self):
 		if self.number_sucursal and self.type_suc:
 			self.format_suc = str(self.type_suc) + str(self.number_sucursal)
