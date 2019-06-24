@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "reporte_jarochito",
+    'name': "fields_contacts",
 
     'summary': """
         Descripción del producto y tipo de tarifa""",
@@ -28,7 +28,7 @@
         'views/views.xml',
         'views/add_menu_items.xml',
         #'views/fac_ieps.xml',
-        'views/presup.xml',
+        #'views/presup.xml',
         'views/templates.xml',
     ],
     # only loaded in demonstration mode
